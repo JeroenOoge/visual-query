@@ -1,0 +1,26 @@
+.abstracts {
+	display: flex;
+	flex-flow: column;
+	gap: .5rem;
+}
+
+.abstract {
+    background-color: #f0f0f0;
+    padding: .5rem 1rem;
+    max-width: 80ch;
+}
+.abstract p {
+    margin: 0;
+    padding-bottom: 0.5rem;
+}
+.abstract p:last-child {
+    padding: 0;
+}
+.highlight {
+	background: #ffea00;
+	padding: 0.1rem .25rem;
+}
+.keywords span {
+    font-weight: bold;
+    color: #777;
+}

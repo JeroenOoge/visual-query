@@ -1,0 +1,9 @@
+.query .label {
+    display: flex;
+    align-items: center;
+}
+.copy {
+    height: 1rem;
+    margin-left: .5rem;
+    cursor: pointer;
+}
