@@ -20,7 +20,7 @@
 	background: #ffea00;
 	padding: 0.1rem .25rem;
 }
-.keywords span {
+.keywords > span {
     font-weight: bold;
     color: #777;
 }

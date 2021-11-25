@@ -15,7 +15,7 @@ class QueryResult extends React.Component {
     render() {
         let result;
         if (Object.entries(this.props.data).length > 0) {
-            result = <p className="label">Total number of hits: {this.props.data["search-results"]["opensearch:totalResults"]}</p>;
+            result =<h2>{parseInt(this.props.data["search-results"]["opensearch:totalResults"]).toLocaleString()} hits</h2>;
         }
 
         let impactChart;
@@ -31,7 +31,7 @@ class QueryResult extends React.Component {
         if (this.props.abstracts.length > 0) {
             abstracts = <div className="abstracts">
                 <span className="label">Papers containing {this.props.activeKeyword["Keyword"]}</span>
-                {this.props.abstracts.map(a => <Abstract data={a} keyword={this.props.activeKeyword} />)}
+                {this.props.abstracts.map(a => <Abstract data={a} keyword={this.props.activeKeyword} key={a["coredata"]["prism:doi"]} />)}
             </div>;
         }
 

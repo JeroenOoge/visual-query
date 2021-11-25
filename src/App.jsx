@@ -15,13 +15,15 @@ import { CSVLink } from "react-csv";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {data: [], queryResult: Object.create({}), keywordImpacts: [], abstracts: [], activeKeyword: ""};
+    this.state = this.initialState();
     this.handleDataDrop = this.handleDataDrop.bind(this);
     this.handleQueryButtonClick = this.handleQueryButtonClick.bind(this);
     this.getQueryResult = this.getQueryResult.bind(this);
     this.handleQueryChange = this.handleQueryChange.bind(this);
     this.handleAbstractChange = this.handleAbstractChange.bind(this);
   }
+
+  initialState = () => {return { data: [], queryResult: Object.create({}), keywordImpacts: [], abstracts: [], activeKeyword: ""}};
 
   buildQuery = (array) => {
     let limit = ` AND ( LIMIT-TO ( DOCTYPE,"ar" ) OR LIMIT-TO ( DOCTYPE,"cp" ) OR LIMIT-TO ( DOCTYPE,"ch" ) )
@@ -89,13 +91,15 @@ class App extends React.Component {
   }
 
   handleQueryChange(data) {
-    this.setState({data: data, queryResult: Object.create({}), keywordImpacts: []});
+    let state = this.initialState();
+    state["data"] = data;
+    this.setState(state);
   }
 
   async handleAbstractChange(keyword, category) {
     const query = this.buildQuery(this.state.data.filter(d => (d["Keyword"] === keyword && d["Category"] === category) || d["Category"] !== category)),
           queryResult = await this.getQueryResult(query, 20),
-          dois = queryResult["search-results"]["entry"].map(d => d["prism:doi"]),
+          dois = queryResult["search-results"]["entry"].map(d => d["prism:doi"]).filter(d => d !== undefined),
           abstracts = await Promise.all(dois.map(async doi => {
             const res = await this.getAbstract(doi);
             return res["abstracts-retrieval-response"];
@@ -127,7 +131,7 @@ class App extends React.Component {
     return (
       <>
         <div className="left">
-          <h2>Build Query</h2>
+          <h2>Build query</h2>
           {dragUpload}
           <QueryCreate data={this.state.data}
                        onQueryChange={this.handleQueryChange}
@@ -136,7 +140,6 @@ class App extends React.Component {
           {query}
         </div>
         <div className="right">
-          <h2>Query Results</h2>
           <QueryResult data={this.state.queryResult}
                        keywordImpacts={this.state.keywordImpacts}
                        colour={colour}
