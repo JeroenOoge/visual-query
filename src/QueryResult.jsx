@@ -15,16 +15,16 @@ class QueryResult extends React.Component {
     render() {
         let result;
         if (Object.entries(this.props.data).length > 0) {
-            result =<h2>{parseInt(this.props.data["search-results"]["opensearch:totalResults"]).toLocaleString()} hits</h2>;
+            result = <h2>{parseInt(this.props.data["search-results"]["opensearch:totalResults"]).toLocaleString()} hits</h2>;
         }
 
         let impactChart;
         if (this.props.keywordImpacts.length > 0) {
             impactChart = <BarChart data={this.props.keywordImpacts}
-                                    width="500"
-                                    height="500"
-                                    colour={this.props.colour}
-                                    onBarClick={this.handleBarClick} />;
+                width="500"
+                height="500"
+                colour={this.props.colour}
+                onBarClick={this.handleBarClick} />;
         }
 
         let abstracts;

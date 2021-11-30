@@ -33,12 +33,12 @@ class QueryCreate extends React.Component {
     }
 
     render() {
-        let inputs;
+        let catInputs;
         let data = this.props.data;
         if (data.length > 0) {
             let cats = [...new Set(data.map(d => d["Category"]))];
             let getKeywords = (c) => data.filter(d => d["Category"] === c).flatMap(d => d["Keyword"]);
-            let catInputs = cats.map(c => {
+            catInputs = cats.map(c => {
                 const colour = this.props.colour(c);
                 return (
                     <div className="category" key={c}>
@@ -47,14 +47,13 @@ class QueryCreate extends React.Component {
                     </div>
                 );
             });
-            inputs = <>
-                {catInputs}
-                <span className="add" onClick={this.addCategory}><PlusCircleOutlined /> Add category</span>
-            </>;
         }
 
         return (
-            <>{inputs}</>
+            <>
+                {catInputs}
+                <span className="add" onClick={this.addCategory}><PlusCircleOutlined /> Add category</span>
+            </>
         );
     }
 }
