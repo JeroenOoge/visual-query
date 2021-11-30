@@ -14,7 +14,9 @@ class QueryCreate extends React.Component {
     }
 
     handleSelect(keyword, category) {
-        this.props.onQueryChange(this.props.data.concat([{ Category: category, Keyword: keyword }]));
+        const newData = this.props.data.concat([{ Category: category, Keyword: keyword }])
+            .filter(d => !(d["Keyword"] === "" && d["Category"] === category));
+        this.props.onQueryChange(newData);
     }
 
     handleDeselect(keyword, category) {

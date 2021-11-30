@@ -17,8 +17,9 @@ class CategorySelect extends React.Component {
     }
 
     render() {
+        const values = this.props.keywords.filter(k => k !== "");
         return (
-            <Select mode="tags" defaultValue = {this.props.keywords} onSelect={this.handleSelect} onDeselect={this.handleDeselect}/>
+            <Select mode="tags" value={values} onSelect={this.handleSelect} onDeselect={this.handleDeselect} />
         );
     }
 }
