@@ -11,6 +11,7 @@
     "d3": "^7.1.1",
     "d3-fetch": "github:d3/d3-fetch",
     "html-react-parser": "^1.4.0",
+    "json2csv": "^5.0.6",
     "mark.js": "^8.11.1",
     "r": "^0.0.5",
     "r-integration": "^1.2.0",

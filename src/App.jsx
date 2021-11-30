@@ -12,6 +12,7 @@ import QueryResult from './QueryResult.jsx';
 import Query from './Query';
 import { CSVLink } from "react-csv";
 import { message } from 'antd';
+import { parse } from 'json2csv';
 
 class App extends React.Component {
   constructor(props) {
@@ -118,6 +119,16 @@ class App extends React.Component {
     this.setState(state);
   }
 
+  saveQuery = () => {
+    const csv = parse(this.state.data),
+      blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' }),
+      element = document.createElement("a");
+    element.href = URL.createObjectURL(blob);
+    element.download = "keywords.csv";
+    document.body.appendChild(element);
+    element.click();
+  }
+
   async handleAbstractChange(keyword, category) {
     const query = this.buildQueryUniquePapers(this.state.data, keyword, category);
     navigator.clipboard.writeText(query);
@@ -137,12 +148,9 @@ class App extends React.Component {
       buttons,
       colour = scaleOrdinal(schemeCategory10).domain(this.state.data.map(d => d["Category"]));
     if (this.state.data.length > 0) {
-      const dataExport = this.state.data.map(d => {
-        return { Category: d["Category"], Keyword: d["Keyword"].replace(/"/g, '"""') };
-      });
       buttons = <div className="buttons">
         <QueryButton onClick={this.handleQueryButtonClick} />
-        <Button><CSVLink data={dataExport} filename="keywords.csv" enclosingCharacter={undefined}>Download keywords as csv</CSVLink></Button>
+        <Button onClick={this.saveQuery}>Download keywords as csv</Button>
       </div>;
       query = <Query query={this.buildQueryFull(this.state.data)} />;
     } else {
