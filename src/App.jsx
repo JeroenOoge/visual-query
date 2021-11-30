@@ -23,7 +23,15 @@ class App extends React.Component {
     this.handleAbstractChange = this.handleAbstractChange.bind(this);
   }
 
-  initialState = () => {return { data: [], queryResult: Object.create({}), keywordImpacts: [], abstracts: [], activeKeyword: ""}};
+  initialState = () => {
+    return {
+      data: [],
+      queryResult: Object.create({}),
+      keywordImpacts: [],
+      abstracts: [],
+      activeKeyword: ""
+    }
+  };
 
   buildQuery = (array) => {
     let limit = ` AND ( LIMIT-TO ( DOCTYPE,"ar" ) OR LIMIT-TO ( DOCTYPE,"cp" ) OR LIMIT-TO ( DOCTYPE,"ch" ) )

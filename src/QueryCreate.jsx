@@ -41,16 +41,16 @@ class QueryCreate extends React.Component {
             let catInputs = cats.map(c => {
                 const colour = this.props.colour(c);
                 return (
-                <div className="category" key={c}>
-                    <CategoryInput colour={colour} defaultValue={c} onChange={this.handleCategoryEdit} />
-                    <CategorySelect category={c} keywords={getKeywords(c)} onSelect={this.handleSelect} onDeselect={this.handleDeselect} />
-                </div>
+                    <div className="category" key={c}>
+                        <CategoryInput colour={colour} defaultValue={c} onPressEnter={this.handleCategoryEdit} />
+                        <CategorySelect category={c} keywords={getKeywords(c)} onSelect={this.handleSelect} onDeselect={this.handleDeselect} />
+                    </div>
                 );
             });
             inputs = <>
-                        {catInputs} 
-                        <span className="add" onClick={this.addCategory}><PlusCircleOutlined /> Add category</span>
-                    </>;
+                {catInputs}
+                <span className="add" onClick={this.addCategory}><PlusCircleOutlined /> Add category</span>
+            </>;
         }
 
         return (

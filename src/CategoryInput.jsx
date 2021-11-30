@@ -11,12 +11,12 @@ class CategoryInput extends React.Component {
     handleChange(e) {
         const value = e.target.value;
         this.setState({value: value});
-        this.props.onChange(this.state.value, value);
+        this.props.onPressEnter(this.state.value, value);
     }
 
     render() {        
         const style = {color: `${this.props.colour}`, fontWeight: "bold"};
-        return <Input style={style} defaultValue={this.props.defaultValue} bordered={false} onChange={this.handleChange} />;
+        return <Input style={style} defaultValue={this.props.defaultValue} bordered={false} onPressEnter={this.handleChange} />;
     }
 }
 
