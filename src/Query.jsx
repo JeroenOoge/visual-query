@@ -1,7 +1,6 @@
 import React from 'react';
 import './Query.css';
 import { message } from 'antd';
-import { CopyOutlined } from '@ant-design/icons';
 
 class Query extends React.Component {
     constructor(props) {
@@ -16,10 +15,8 @@ class Query extends React.Component {
 
     render() {
         return (
-            <div className="query">
-                <span className="label">
-                    Query for Scopus <CopyOutlined className="copy" onClick={this.handleCopy} />
-                </span>
+            <div className="query" onClick={this.handleCopy}>
+                <span className="label">Query for Scopus</span>
                 <p>{this.props.query}</p>
             </div>
         );
