@@ -14,8 +14,7 @@ class QueryCreate extends React.Component {
     }
 
     handleSelect(keyword, category) {
-        let k = keyword.includes(" ") ? '"' + keyword + '"' : keyword;
-        this.props.onQueryChange(this.props.data.concat([{Category: category, Keyword: k}]));
+        this.props.onQueryChange(this.props.data.concat([{ Category: category, Keyword: keyword }]));
     }
 
     handleDeselect(keyword, category) {
@@ -23,13 +22,13 @@ class QueryCreate extends React.Component {
     }
 
     handleCategoryEdit(oldValue, newValue) {
-        const data = this.props.data.map(d => d["Category"] === oldValue ? {Category: newValue, Keyword: d["Keyword"]} : d);
+        const data = this.props.data.map(d => d["Category"] === oldValue ? { Category: newValue, Keyword: d["Keyword"] } : d);
         this.props.onQueryChange(data);
     }
 
     addCategory() {
         const cats = [...new Set(this.props.data.map(d => d["Category"]))];
-        this.props.onQueryChange(this.props.data.concat([{Category: "Category" + ++cats.length, Keyword: ""}]));        
+        this.props.onQueryChange(this.props.data.concat([{ Category: "Category" + ++cats.length, Keyword: "" }]));
     }
 
     render() {
