@@ -11,6 +11,7 @@ import QueryButton from './QueryButton.jsx';
 import QueryResult from './QueryResult.jsx';
 import Query from './Query';
 import { CSVLink } from "react-csv";
+import { message } from 'antd';
 
 class App extends React.Component {
   constructor(props) {
@@ -118,17 +119,16 @@ class App extends React.Component {
   }
 
   async handleAbstractChange(keyword, category) {
-    const query = this.buildQueryFull(this.state.data.filter(d => (d["Keyword"] === keyword && d["Category"] === category) || d["Category"] !== category)),
-      queryResult = await this.getQueryResult(query, 20),
-      dois = queryResult["search-results"]["entry"].map(d => d["prism:doi"]).filter(d => d !== undefined),
-      abstracts = await Promise.all(dois.map(async doi => {
-        const res = await this.getAbstract(doi);
-        return res["abstracts-retrieval-response"];
-      }));
-    console.log(queryResult);
-    console.log(dois);
-    console.log(abstracts);
-    this.setState({ abstracts: abstracts, activeKeyword: { Keyword: keyword, Category: category } });
+    const query = this.buildQueryUniquePapers(this.state.data, keyword, category);
+    navigator.clipboard.writeText(query);
+    message.success('Query copied to clipboard', 1);
+    // const queryResult = await this.getQueryResult(query, 20),
+    //   dois = queryResult["search-results"]["entry"].map(d => d["prism:doi"]).filter(d => d !== undefined),
+    //   abstracts = await Promise.all(dois.map(async doi => {
+    //     const res = await this.getAbstract(doi);
+    //     return res["abstracts-retrieval-response"];
+    //   }));
+    // this.setState({ abstracts: abstracts, activeKeyword: { Keyword: keyword, Category: category } });
   }
 
   render() {
