@@ -1,5 +1,5 @@
 import 'antd/dist/antd.css';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { csvParse } from 'd3-dsv';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';
@@ -10,8 +10,6 @@ import QueryCreate from './QueryCreate.jsx';
 import QueryButton from './QueryButton.jsx';
 import QueryResult from './QueryResult.jsx';
 import Query from './Query';
-import { CSVLink } from "react-csv";
-import { message } from 'antd';
 import { parse } from 'json2csv';
 
 class App extends React.Component {
