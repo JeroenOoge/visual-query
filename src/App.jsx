@@ -46,7 +46,7 @@ class App extends React.Component {
   limitQuery = (str) => {
     let limit = ` AND ( LIMIT-TO ( DOCTYPE,"ar" ) OR LIMIT-TO ( DOCTYPE,"cp" ) OR LIMIT-TO ( DOCTYPE,"ch" ) )
       AND ( LIMIT-TO ( LANGUAGE,"English" ) )
-      AND  PUBYEAR  <  2021`;
+      AND  PUBYEAR  <  2022`;
     return "TITLE-ABS-KEY (" + str + ")" + limit;
   }
 
