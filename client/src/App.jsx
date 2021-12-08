@@ -86,7 +86,7 @@ class App extends React.Component {
     let response = await fetch("https://nonprod-api.elsevier.com/content/search/scopus?" + httpAccept + queryString + key + countString);
     // let response2 = await fetch("https://api-elsevier-com.kuleuven.e-bronnen.be/content/search/scopus?" + httpAccept + queryString + key + countString);
     // console.log(response2);
-    let test = await fetch("http://localhost:9000/test")
+    let test = await fetch(`http://localhost:9000/scopus/${encodeURIComponent(query)}/7f59af901d2d86f78a1fd60c1bf9426a`)
       .then(res => res.text());
       console.log(test);
     let json = await response.json();
