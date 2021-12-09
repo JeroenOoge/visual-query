@@ -78,27 +78,18 @@ class App extends React.Component {
     });
   }
 
-  async getQueryResult(query, count = 1) {
-    const httpAccept = encodeURIComponent("httpAccept=application/json"),
-      queryString = "&query=" + encodeURIComponent(query),
-      key = "&apiKey=7f59af901d2d86f78a1fd60c1bf9426a",
-      countString = "&count=" + count;
-    let response = await fetch("https://nonprod-api.elsevier.com/content/search/scopus?" + httpAccept + queryString + key + countString);
-    // let response2 = await fetch("https://api-elsevier-com.kuleuven.e-bronnen.be/content/search/scopus?" + httpAccept + queryString + key + countString);
-    // console.log(response2);
-    let test = await fetch(`http://localhost:9000/scopus/${encodeURIComponent(query)}/7f59af901d2d86f78a1fd60c1bf9426a`)
-      .then(res => res.text());
-      console.log(test);
-    let json = await response.json();
-    return json;
+  async getQueryResult(query, count = 1000, key = "7f59af901d2d86f78a1fd60c1bf9426a") {
+    let response = await fetch(`/search/${encodeURIComponent(query)}/${key}/${count}`)
+      .then(res => res.json());
+    console.log(response);
+    return response;
   }
 
-  async getAbstract(doi) {
-    const httpAccept = "httpAccept=application/json",
-      key = "&apiKey=7f59af901d2d86f78a1fd60c1bf9426a",
-      response = await fetch(`https://nonprod-api.elsevier.com/content/abstract/doi/${doi}?${httpAccept}${key}`),
-      json = await response.json();
-    return json;
+  async getAbstract(doi, key = "7f59af901d2d86f78a1fd60c1bf9426a") {
+    let response = await fetch(`/abstract/${key}/${doi}`)
+      .then(res => res.json());
+    console.log(response);
+    return response;
   }
 
   setKeywordImpacts() {
@@ -136,7 +127,7 @@ class App extends React.Component {
     const query = this.buildQueryUniquePapers(this.state.data, keyword, category);
     navigator.clipboard.writeText(query);
     message.success('Query copied to clipboard', 1);
-    // const queryResult = await this.getQueryResult(query, 20),
+    // const queryResult = await this.getQueryResult(query, 10),
     //   dois = queryResult["search-results"]["entry"].map(d => d["prism:doi"]).filter(d => d !== undefined),
     //   abstracts = await Promise.all(dois.map(async doi => {
     //     const res = await this.getAbstract(doi);
