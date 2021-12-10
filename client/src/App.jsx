@@ -6,6 +6,7 @@ import { schemeCategory10 } from 'd3-scale-chromatic';
 import React from 'react';
 import './App.css';
 import DragUpload from './DragUpload.js';
+import ExcludedPapers from './ExcludedPapers';
 import QueryCreate from './QueryCreate.jsx';
 import QueryButton from './QueryButton.jsx';
 import QueryResult from './QueryResult.jsx';
@@ -25,7 +26,7 @@ class App extends React.Component {
 
   initialState = () => {
     return {
-      data: [],
+      data: [{ Category: "ai", Keyword: "machine learning" }],
       queryResult: Object.create({}),
       keywordImpacts: [],
       abstracts: [],
@@ -169,6 +170,7 @@ class App extends React.Component {
             abstracts={this.state.abstracts}
             activeKeyword={this.state.activeKeyword}
             onAbstractChange={this.handleAbstractChange} />
+          <ExcludedPapers total={this.state.queryResult["search-results"]["opensearch:totalResults"]} />
         </div>
       </>
     );
