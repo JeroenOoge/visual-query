@@ -16,8 +16,9 @@ import { parse } from 'json2csv';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.initialState();
+    this.state = Object.defineProperty(this.initialState(), "seeds", { value: [] });
     this.handleDataDrop = this.handleDataDrop.bind(this);
+    this.handleSeedDrop = this.handleSeedDrop.bind(this);
     this.handleQueryButtonClick = this.handleQueryButtonClick.bind(this);
     this.getQueryResult = this.getQueryResult.bind(this);
     this.handleQueryChange = this.handleQueryChange.bind(this);
@@ -26,7 +27,8 @@ class App extends React.Component {
 
   initialState = () => {
     return {
-      data: [{ Category: "ai", Keyword: "machine learning" }],
+      // data: [{ Category: "ai", Keyword: "machine learning" }, { Category: "hci", Keyword: "hci" }],
+      data: [],
       queryResult: Object.create({}),
       keywordImpacts: [],
       abstracts: [],
@@ -70,6 +72,14 @@ class App extends React.Component {
     }.bind(this);
   }
 
+  handleSeedDrop(file) {
+    const reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = function (event) {
+      this.setState({ seeds: csvParse(event.target.result).map(s => s["Title"]) });
+    }.bind(this);
+  }
+
   handleQueryButtonClick() {
     this.setState({ keywordImpacts: [] });
     const query = this.buildQueryFull(this.state.data);
@@ -79,8 +89,8 @@ class App extends React.Component {
     });
   }
 
-  async getQueryResult(query, count = 1000, key = "7f59af901d2d86f78a1fd60c1bf9426a") {
-    let response = await fetch(`/search/${encodeURIComponent(query)}/${key}/${count}`)
+  async getQueryResult(query, count = 1, start = 0, key = "7f59af901d2d86f78a1fd60c1bf9426a") {
+    let response = await fetch(`/search/${encodeURIComponent(query)}/${key}/${count}/${start}`)
       .then(res => res.json());
     console.log(response);
     return response;
@@ -139,8 +149,10 @@ class App extends React.Component {
 
   render() {
     let dragUpload,
+      seedUpload,
       query,
       buttons,
+      excludedPapers,
       colour = scaleOrdinal(schemeCategory10).domain(this.state.data.map(d => d["Category"]));
     if (this.state.data.length > 0) {
       buttons = <div className="buttons">
@@ -149,19 +161,35 @@ class App extends React.Component {
       </div>;
       query = <Query query={this.buildQueryFull(this.state.data)} />;
     } else {
-      dragUpload = <DragUpload onDropDone={this.handleDataDrop} showUploadList={false} />;
+      dragUpload = <DragUpload title="keyword"
+        description="Expects a .csv file with columns 'Category' and 'Keyword'"
+        onDropDone={this.handleDataDrop}
+        showUploadList={false} />;
+    }
+
+    if (this.state.seeds.length === 0) {
+      seedUpload = <DragUpload title="seeds"
+        description="Expects a .csv file with one column 'Title'"
+        onDropDone={this.handleSeedDrop}
+        showUploadList={false} />;
+    }
+
+    if (Object.keys(this.state.queryResult).length > 0) {
+      excludedPapers = <ExcludedPapers queryResult={this.state.queryResult} search={this.getQueryResult} seeds={this.state.seeds} />;
     }
 
     return (
       <>
         <div className="left">
           <h2>Build query</h2>
+          {seedUpload}
           {dragUpload}
           <QueryCreate data={this.state.data}
             onQueryChange={this.handleQueryChange}
             colour={colour} />
           {buttons}
           {query}
+          <a href='https://api-elsevier-com.kuleuven.e-bronnen.be/content/search/scopus'>Log in here before you use the app</a>
         </div>
         <div className="right">
           <QueryResult data={this.state.queryResult}
@@ -170,7 +198,7 @@ class App extends React.Component {
             abstracts={this.state.abstracts}
             activeKeyword={this.state.activeKeyword}
             onAbstractChange={this.handleAbstractChange} />
-          <ExcludedPapers total={this.state.queryResult["search-results"]["opensearch:totalResults"]} />
+          {excludedPapers}
         </div>
       </>
     );

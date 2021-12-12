@@ -1,0 +1,13 @@
+span {
+    display: flex;
+    gap: .5rem;
+}
+span svg {
+    margin-top: 4px;
+}
+.ant-spin {
+    display: flex;
+    gap: .5rem;
+    margin-left: 1rem;
+    font-weight: normal;
+}

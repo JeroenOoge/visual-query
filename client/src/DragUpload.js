@@ -3,7 +3,7 @@ import { InboxOutlined } from '@ant-design/icons';
 
 const { Dragger } = Upload;
 
-const DragUpload = function(props) {
+const DragUpload = function (props) {
   const draggerProps = {
     name: 'file',
     showUploadList: false,
@@ -27,10 +27,8 @@ const DragUpload = function(props) {
       <p className="ant-upload-drag-icon">
         <InboxOutlined />
       </p>
-      <p className="ant-upload-text">Upload keyword file: click or drag to this area</p>
-      <p className="ant-upload-hint">
-        Expects a .csv file with columns 'Category' and 'Keyword'
-      </p>
+      <p className="ant-upload-text">Upload {props.title} file: click or drag to this area</p>
+      <p className="ant-upload-hint">{props.description}</p>
     </Dragger>
   );
 }
