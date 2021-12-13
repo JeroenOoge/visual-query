@@ -1,4 +1,4 @@
-import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
+import { CheckCircleFilled, CloseCircleFilled, QuestionCircleFilled } from "@ant-design/icons";
 import { Spin } from "antd";
 import React from "react";
 import './ExcludedPapers.css';
@@ -24,10 +24,10 @@ class ExcludedPapers extends React.Component {
         }
     }
 
-    getIcon(title) {
+    getIcon(title, progress) {
         return (this.state.hits.includes(title) ?
             <CheckCircleFilled style={{ color: "#52c41a" }} /> :
-            <CloseCircleFilled style={{ color: "red" }} />);
+            (progress < 100 ? <QuestionCircleFilled style={{ color: "#ff9f4a" }} /> : <CloseCircleFilled style={{ color: "#d62728" }} />));
     }
 
     render() {
@@ -40,7 +40,7 @@ class ExcludedPapers extends React.Component {
         return (
             <div>
                 <span className="label">Seed papers {spin}</span>
-                {this.props.seeds.map(e => <a key={e["Title"].replace(" ", "-")} href={e["Url"]}>{this.getIcon(e["Title"])} {e["Title"]}</a>)}
+                {this.props.seeds.map(e => <a key={e["Title"].replace(" ", "-")} href={e["Url"]}>{this.getIcon(e["Title"], progress)} {e["Title"]}</a>)}
             </div>
         );
     }
