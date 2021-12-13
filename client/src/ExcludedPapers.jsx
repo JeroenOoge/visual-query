@@ -40,7 +40,7 @@ class ExcludedPapers extends React.Component {
         return (
             <div>
                 <span className="label">Seed papers {spin}</span>
-                {this.props.seeds.map(e => <span key={e.replace(" ", "-")}>{this.getIcon(e)} {e}</span>)}
+                {this.props.seeds.map(e => <a key={e["Title"].replace(" ", "-")} href={e["Url"]}>{this.getIcon(e["Title"])} {e["Title"]}</a>)}
             </div>
         );
     }

@@ -78,7 +78,7 @@ class App extends React.Component {
     const reader = new FileReader();
     reader.readAsText(file);
     reader.onload = function (event) {
-      this.setState({ seeds: csvParse(event.target.result).map(s => s["Title"]) });
+      this.setState({ seeds: csvParse(event.target.result) });
     }.bind(this);
   }
 
@@ -171,7 +171,7 @@ class App extends React.Component {
 
     if (this.state.seeds.length === 0) {
       seedUpload = <DragUpload title="seeds"
-        description="Expects a .csv file with one column 'Title'"
+        description="Expects a .csv file with columns 'Title' and 'Url"
         onDropDone={this.handleSeedDrop}
         showUploadList={false} />;
     }

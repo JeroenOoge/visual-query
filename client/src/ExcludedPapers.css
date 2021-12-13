@@ -1,8 +1,8 @@
-span {
+span, a {
     display: flex;
     gap: .5rem;
 }
-span svg {
+a svg {
     margin-top: 4px;
 }
 .ant-spin {
