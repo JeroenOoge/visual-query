@@ -13,10 +13,14 @@ class ExcludedPapers extends React.Component {
     async componentDidMount() {
         const total = this.props.queryResult["search-results"]["opensearch:totalResults"],
             query = this.props.queryResult["search-results"]["opensearch:Query"]["@searchTerms"],
-            batchAmount = 25;
+            batchAmount = 200;
         for (let i = 0; i < Math.ceil(total / batchAmount); i++) {
             const result = await this.props.search(query, batchAmount, batchAmount * i);
-            this.setState({ hits: this.state.hits.concat(result["search-results"]["entry"].map(o => o["dc:title"])) });
+            try {
+                this.setState({ hits: this.state.hits.concat(result["search-results"]["entry"].map(o => o["dc:title"])) });
+            } catch (error) {
+                console.error("No search results:", error);
+            }
         }
     }
 
@@ -36,7 +40,7 @@ class ExcludedPapers extends React.Component {
         return (
             <div>
                 <span className="label">Seed papers {spin}</span>
-                {this.props.seeds.map(e => <span>{this.getIcon(e)} {e}</span>)}
+                {this.props.seeds.map(e => <span key={e.replace(" ", "-")}>{this.getIcon(e)} {e}</span>)}
             </div>
         );
     }

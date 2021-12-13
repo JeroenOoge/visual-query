@@ -94,14 +94,14 @@ class App extends React.Component {
   async getQueryResult(query, count = 1, start = 0, key = "7f59af901d2d86f78a1fd60c1bf9426a") {
     let response = await fetch(`/search/${encodeURIComponent(query)}/${key}/${count}/${start}`)
       .then(res => res.json());
-    console.log(response);
+    // console.log(response);
     return response;
   }
 
   async getAbstract(doi, key = "7f59af901d2d86f78a1fd60c1bf9426a") {
     let response = await fetch(`/abstract/${key}/${doi}`)
       .then(res => res.json());
-    console.log(response);
+    // console.log(response);
     return response;
   }
 

@@ -9,7 +9,7 @@ router.get("/:str/:key/:count/:start", async function (req, res) {
         key = "&apiKey=" + req.params["key"],
         count = "&count=" + req.params["count"],
         start = "&start=" + req.params["start"],
-        url = "https://api.elsevier.com/content/search/scopus?" + httpAccept + query + key + count + start;
+        url = "https://api-elsevier-com.kuleuven.e-bronnen.be/content/search/scopus?" + httpAccept + query + key + count + start;
     const response = await fetch(url)
         .then(res => res.json())
         .catch((error) => {
