@@ -16,7 +16,9 @@ import { parse } from 'json2csv';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = Object.defineProperty(this.initialState(), "seeds", { value: [] });
+    let state = this.initialState();
+    state["seeds"] = [];
+    this.state = state;
     this.handleDataDrop = this.handleDataDrop.bind(this);
     this.handleSeedDrop = this.handleSeedDrop.bind(this);
     this.handleQueryButtonClick = this.handleQueryButtonClick.bind(this);
