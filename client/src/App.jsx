@@ -6,7 +6,7 @@ import { schemeCategory10 } from 'd3-scale-chromatic';
 import React from 'react';
 import './App.css';
 import DragUpload from './DragUpload.js';
-import ExcludedPapers from './ExcludedPapers';
+import SeedPapers from './SeedPapers';
 import QueryCreate from './QueryCreate.jsx';
 import QueryButton from './QueryButton.jsx';
 import QueryResult from './QueryResult.jsx';
@@ -177,7 +177,7 @@ class App extends React.Component {
     }
 
     if (Object.keys(this.state.queryResult).length > 0) {
-      excludedPapers = <ExcludedPapers queryResult={this.state.queryResult} search={this.getQueryResult} seeds={this.state.seeds} />;
+      excludedPapers = <SeedPapers queryResult={this.state.queryResult} search={this.getQueryResult} seeds={this.state.seeds} />;
     }
 
     return (
@@ -191,7 +191,7 @@ class App extends React.Component {
             colour={colour} />
           {buttons}
           {query}
-          <a href='https://api-elsevier-com.kuleuven.e-bronnen.be/content/search/scopus'>Log in here before you use the app</a>
+          {/* <a href='https://api-elsevier-com.kuleuven.e-bronnen.be/content/search/scopus'>Log in here before you use the app</a> */}
         </div>
         <div className="right">
           <QueryResult data={this.state.queryResult}

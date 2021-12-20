@@ -1,3 +1,7 @@
+.seed-papers {
+    max-height: 10rem;
+    overflow-y: auto;
+}
 span, a {
     display: flex;
     gap: .5rem;
