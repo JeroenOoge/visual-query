@@ -45,13 +45,14 @@ class SeedPapers extends React.Component {
             checked = this.state.status.filter(d => d["Status"] !== undefined).length;
         let spin;
         if (checked !== total && showSpin) {
-            spin = <Spin tip={`Checking (${checked}/${total})`} />
+            spin = <Spin tip={"Checking..."} />
         }
         if (data.length > 0) {
             return (
                 <div className="seed-papers">
                     <span className="label">Seed papers {name} ({data.length}/{total}) {spin}</span>
-                    {data.map(e => <a key={e["Title"].replace(" ", "-")} href={e["Url"]}>{this.getIcon(e["Title"])} {e["Title"]}</a>)}
+                    {data.sort((a, b) => a["Title"].localeCompare(b["Title"]))
+                        .map(e => <a key={e["Title"].replace(" ", "-")} href={e["Url"]} target="_blank" rel="noreferrer">{this.getIcon(e["Title"])} {e["Title"]}</a>)}
                 </div>
             );
         }

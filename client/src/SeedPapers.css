@@ -2,6 +2,12 @@
     max-height: 10rem;
     overflow-y: auto;
 }
+.seed-papers .label {
+	position: sticky;
+	top: 0;
+	background: white;
+	box-shadow: white 0 0 .25rem .25rem;
+}
 span, a {
     display: flex;
     gap: .5rem;
