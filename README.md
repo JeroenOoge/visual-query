@@ -1,5 +1,5 @@
 # Visual Query
-This experiment facilitates query-building for systematic reviews on Scopus. The app uses a React-Express architecture, see [https://www.freecodecamp.org/news/create-a-react-frontend-a-node-express-backend-and-connect-them-together-c5798926047c/](FreeCodeCamp).
+This experiment facilitates query-building for systematic reviews on Scopus. The app uses a React-Express architecture, see [FreeCodeCamp](https://www.freecodecamp.org/news/create-a-react-frontend-a-node-express-backend-and-connect-them-together-c5798926047c/).
 
 ## Run the API
 1. In your terminal, navigate to the `api` directory.
