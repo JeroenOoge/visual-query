@@ -13,14 +13,16 @@ class SeedPapers extends React.Component {
     }
 
     async componentDidMount() {
-        const query = this.props.queryResult["search-results"]["opensearch:Query"]["@searchTerms"];
-        for (let i = 0; i < this.state.status.length; i++) {
-            const paper = this.state.status[i];
-            const checkQuery = `${query} AND TITLE("${paper["Title"]}")`;
-            const result = await this.props.search(checkQuery),
-                statusNew = this.state.status;
-            statusNew[i]["Status"] = result["search-results"]["opensearch:totalResults"] > 0 ? 1 : 0;
-            this.setState({ status: statusNew });
+        if ("search-results" in this.props.queryResult) {
+            const query = this.props.queryResult["search-results"]["opensearch:Query"]["@searchTerms"];
+            for (let i = 0; i < this.state.status.length; i++) {
+                const paper = this.state.status[i];
+                const checkQuery = `${query} AND TITLE("${paper["Title"]}")`;
+                const result = await this.props.search(checkQuery),
+                    statusNew = this.state.status;
+                statusNew[i]["Status"] = result["search-results"]["opensearch:totalResults"] > 0 ? 1 : 0;
+                this.setState({ status: statusNew });
+            }
         }
     }
 

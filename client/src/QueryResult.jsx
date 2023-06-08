@@ -14,8 +14,10 @@ class QueryResult extends React.Component {
 
     render() {
         let result;
-        if (Object.entries(this.props.data).length > 0) {
+        if ("search-results" in this.props.data) {
             result = <h2>{parseInt(this.props.data["search-results"]["opensearch:totalResults"]).toLocaleString()} hits</h2>;
+        } else if ("service-error" in this.props.data || "error-response" in this.props.data) {
+            result = "Scopus returned an error message. Check your API key and try connecting to the KU Leuven campus wifi or VPN.";
         }
 
         let impactChart;

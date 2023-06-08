@@ -91,14 +91,14 @@ class App extends React.Component {
     });
   }
 
-  async getQueryResult(query, count = 1, start = 0, key = "7f59af901d2d86f78a1fd60c1bf9426a") {
+  async getQueryResult(query, count = 1, start = 0, key = "f7ef6fd4efc909671dc9ef01c1ca4e4e") {
     let response = await fetch(`/search/${encodeURIComponent(query)}/${key}/${count}/${start}`)
       .then(res => res.json());
     // console.log(response);
     return response;
   }
 
-  async getAbstract(doi, key = "7f59af901d2d86f78a1fd60c1bf9426a") {
+  async getAbstract(doi, key = "f7ef6fd4efc909671dc9ef01c1ca4e4e") {
     let response = await fetch(`/abstract/${key}/${doi}`)
       .then(res => res.json());
     // console.log(response);
@@ -113,8 +113,10 @@ class App extends React.Component {
         query = this.buildQueryUniquePapers(data, k, c);
       setTimeout(() => {
         this.getQueryResult(query).then(res => {
-          let i = res["search-results"]["opensearch:totalResults"];
-          this.setState({ keywordImpacts: this.state.keywordImpacts.concat([{ Category: c, Keyword: k, Impact: i }]) });
+          if ("search-results" in res) {
+            let i = res["search-results"]["opensearch:totalResults"];
+            this.setState({ keywordImpacts: this.state.keywordImpacts.concat([{ Category: c, Keyword: k, Impact: i }]) });
+          }
         });
       }, 1000 * i)
     });
