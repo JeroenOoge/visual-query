@@ -173,7 +173,7 @@ class App extends React.Component {
 
     if (this.state.seeds.length === 0) {
       seedUpload = <DragUpload title="seeds"
-        description="Expects a .csv file with columns 'Title' and 'Url"
+        description="Expects a .csv file with columns 'Title' and 'Url'"
         onDropDone={this.handleSeedDrop}
         showUploadList={false} />;
     }
