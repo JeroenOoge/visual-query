@@ -13,6 +13,8 @@ import QueryResult from './QueryResult.jsx';
 import Query from './Query';
 import { parse } from 'json2csv';
 
+let keyScopus = "f7ef6fd4efc909671dc9ef01c1ca4e4e"; // demo key, limited to 500 requests per day
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -42,16 +44,19 @@ class App extends React.Component {
     let cats = new Set(array.map(d => d["Category"]));
     let query = [];
     cats.forEach(c => {
-      let group = array.filter(d => d["Category"] === c).map(d => d["Keyword"]).join(" OR ");
-      query.push("(" + group + ")");
+      let group = array.filter(d => d["Category"] === c).map(d => d["Keyword"]);
+      if (group.length > 1) {
+        query.push("(" + group.join(" OR ") + ")");
+      } else if (group.length === 1) {
+        query.push(group[0]);
+      }
     });
     return query.length === 0 ? "()" : query.join(" AND ");
   }
 
   limitQuery = (str) => {
     let limit = ` AND ( LIMIT-TO ( DOCTYPE,"ar" ) OR LIMIT-TO ( DOCTYPE,"cp" ) OR LIMIT-TO ( DOCTYPE,"ch" ) )
-      AND ( LIMIT-TO ( LANGUAGE,"English" ) )
-      AND  PUBYEAR  <  2022`;
+      AND ( LIMIT-TO ( LANGUAGE,"English" ) )`;
     return "TITLE-ABS-KEY (" + str + ")" + limit;
   }
 
@@ -91,14 +96,14 @@ class App extends React.Component {
     });
   }
 
-  async getQueryResult(query, count = 1, start = 0, key = "f7ef6fd4efc909671dc9ef01c1ca4e4e") {
+  async getQueryResult(query, count = 1, start = 0, key = keyScopus) {
     let response = await fetch(`/search/${encodeURIComponent(query)}/${key}/${count}/${start}`)
       .then(res => res.json());
     // console.log(response);
     return response;
   }
 
-  async getAbstract(doi, key = "f7ef6fd4efc909671dc9ef01c1ca4e4e") {
+  async getAbstract(doi, key = keyScopus) {
     let response = await fetch(`/abstract/${key}/${doi}`)
       .then(res => res.json());
     // console.log(response);
