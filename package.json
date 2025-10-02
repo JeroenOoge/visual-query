@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "scripts": {
+    "api": "npm start --prefix api",
+    "client": "npm start --prefix client",
+    "start": "concurrently \"npm run api\" \"npm run client\""
+  }
+}

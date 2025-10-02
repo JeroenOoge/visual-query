@@ -18,16 +18,4 @@ The app contains some basic functionalities to get insights in the search query 
 
 
 ## Launching the app
-The app uses a React-Express architecture (see [FreeCodeCamp](https://www.freecodecamp.org/news/create-a-react-frontend-a-node-express-backend-and-connect-them-together-c5798926047c/)) so you need to start an Express back-end and a React front-end.
-
-### Run the API
-1. In your terminal, navigate to the `api` directory.
-2. Run `npm install` to install all dependencies.
-3. Run `npm start` to start the api.
-
-### Run the Client
-1. In another terminal, navigate to the `client` directory.
-2. Run `npm install` to install all dependencies.
-3. Run `npm start` to start the app.
-
-With the `api` and `client` running, navigate to [http://localhost:3000](http://localhost:3000).
+Simply run `npm start`. This will start an Express back-end and a React front-end (see [FreeCodeCamp](https://www.freecodecamp.org/news/create-a-react-frontend-a-node-express-backend-and-connect-them-together-c5798926047c/)). The app runs on [http://localhost:3000](http://localhost:3000).
