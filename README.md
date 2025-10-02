@@ -18,4 +18,6 @@ The app contains some basic functionalities to get insights in the search query 
 
 
 ## Launching the app
-Simply run `npm start`. This will start an Express back-end and a React front-end (see [FreeCodeCamp](https://www.freecodecamp.org/news/create-a-react-frontend-a-node-express-backend-and-connect-them-together-c5798926047c/)). The app runs on [http://localhost:3000](http://localhost:3000).
+When you want to launch the app for the first time, run `npm install`.
+
+Then, run `npm start`. This will start an Express back-end and a React front-end (see [FreeCodeCamp](https://www.freecodecamp.org/news/create-a-react-frontend-a-node-express-backend-and-connect-them-together-c5798926047c/)). The app runs on [http://localhost:3000](http://localhost:3000).
