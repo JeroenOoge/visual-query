@@ -1,5 +1,5 @@
 # Visual Query
-This experimental app facilitates query-building for systematic reviews on Scopus. Connecting to the Scopus API requires an API key, which you can obtain on the [Elsevier Developer Portal](https://api.elsevier.com). For now, I have added my own key. If it doesn't work, try changing it to your own key (search for `"key ="` in the App.jsx file).
+This experimental app facilitates query-building for systematic reviews on Scopus. Connecting to the Scopus API requires an API key, which you can obtain on the [Elsevier Developer Portal](https://api.elsevier.com). Rename the `api/config-example.js` file to `api/config.js` and add your key.
 
 ![Screenshot of the VisualQuery interface](/screenshotVisualQuery.png)
 
