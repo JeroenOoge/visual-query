@@ -13,8 +13,6 @@ import QueryResult from './QueryResult.jsx';
 import Query from './Query';
 import { parse } from 'json2csv';
 
-let keyScopus = "f7ef6fd4efc909671dc9ef01c1ca4e4e"; // demo key, limited to 500 requests per day
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -96,15 +94,15 @@ class App extends React.Component {
     });
   }
 
-  async getQueryResult(query, count = 1, start = 0, key = keyScopus) {
-    let response = await fetch(`/search/${encodeURIComponent(query)}/${key}/${count}/${start}`)
+  async getQueryResult(query, count = 1, start = 0) {
+    let response = await fetch(`/search/${encodeURIComponent(query)}/${count}/${start}`)
       .then(res => res.json());
     // console.log(response);
     return response;
   }
 
-  async getAbstract(doi, key = keyScopus) {
-    let response = await fetch(`/abstract/${key}/${doi}`)
+  async getAbstract(doi) {
+    let response = await fetch(`/abstract/${doi}`)
       .then(res => res.json());
     // console.log(response);
     return response;
