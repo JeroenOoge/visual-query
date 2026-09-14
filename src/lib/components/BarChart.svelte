@@ -9,7 +9,7 @@
 		[...data].sort((a, b) => b["Impact"] - a["Impact"]),
 	);
 	const labelWidth = 150;
-	const margin = { top: 0, right: 15, bottom: 10, left: 0 };
+	const margin = { top: 10, right: 15, bottom: 10, left: 0 };
 	const height = $derived(data.length * 25 + margin.top + margin.bottom);
 
 	const scaleX = $derived(
@@ -46,8 +46,8 @@
 					}}
 				>
 					<text
-						y={scaleY(d["Keyword"])}
-						dy={scaleY.bandwidth() / 2}
+						y={scaleY(d["Keyword"]) + scaleY.bandwidth() / 2}
+						dominant-baseline="middle"
 						fill={d3color(colour(d["Category"]))?.darker(0.25)}
 					>
 						{d["Keyword"]}
@@ -62,8 +62,8 @@
 					/>
 					<text
 						x={labelWidth + 5}
-						y={scaleY(d["Keyword"])}
-						dy={scaleY.bandwidth() / 2}
+						y={scaleY(d["Keyword"]) + scaleY.bandwidth() / 2}
+						dominant-baseline="middle"
 					>
 						{d["Impact"].toLocaleString()}
 					</text>

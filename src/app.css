@@ -8,44 +8,19 @@
 	color-scheme: light;
 }
 
-.app {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 2rem;
-	padding: 2rem;
-	max-width: 1400px;
-	margin: 0 auto;
-}
-
-.left,
-.right {
-	display: flex;
-	flex-flow: column;
-	gap: 1.5rem;
-}
-
-.category {
-	display: flex;
-	flex-flow: column;
-	gap: 0.25rem;
-}
-
-.category p {
-	margin: 0;
+h2 {
+	font-size: 1.5rem;
 	font-weight: bold;
+	margin-bottom: 1rem;
 }
 
 .label {
 	font-weight: bold;
 }
 
-.buttons {
-	display: flex;
-	flex-flow: column;
-	gap: 0.5rem;
+a {
+	color: #0770ef;
 }
-
-.highlight {
-	background-color: var(--color-warning-200);
-	font-weight: bold;
+a:hover {
+	text-decoration: underline;
 }

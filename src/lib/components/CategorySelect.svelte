@@ -40,3 +40,14 @@
 		onblur={addTag}
 	/>
 </div>
+
+<style>
+	div {
+		border: 1px solid #e2e2e2;
+	}
+
+	.chip,
+	.chip:hover {
+		background-color: #e2e2e2;
+	}
+</style>

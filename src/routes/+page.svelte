@@ -1,34 +1,34 @@
 <script>
-	import { csvParse, csvFormat } from 'd3-dsv';
-	import { scaleOrdinal } from 'd3-scale';
-	import { schemeCategory10 } from 'd3-scale-chromatic';
+	import { csvParse, csvFormat } from "d3-dsv";
+	import { scaleOrdinal } from "d3-scale";
+	import { schemeCategory10 } from "d3-scale-chromatic";
 
-	import DragUpload from '$lib/components/DragUpload.svelte';
-	import QueryCreate from '$lib/components/QueryCreate.svelte';
-	import QueryButton from '$lib/components/QueryButton.svelte';
-	import Query from '$lib/components/Query.svelte';
-	import QueryResult from '$lib/components/QueryResult.svelte';
-	import SeedPapers from '$lib/components/SeedPapers.svelte';
+	import DragUpload from "$lib/components/DragUpload.svelte";
+	import QueryCreate from "$lib/components/QueryCreate.svelte";
+	import QueryButton from "$lib/components/QueryButton.svelte";
+	import Query from "$lib/components/Query.svelte";
+	import QueryResult from "$lib/components/QueryResult.svelte";
+	import SeedPapers from "$lib/components/SeedPapers.svelte";
 
-	import { buildQueryFull, buildQueryUniquePapers } from '$lib/query.js';
-	import { searchScopus } from '$lib/scopus.js';
+	import { buildQueryFull, buildQueryUniquePapers } from "$lib/query.js";
+	import { searchScopus } from "$lib/scopus.js";
 
 	let data = $state([]);
 	let seeds = $state([]);
 	let queryResult = $state({});
 	let keywordImpacts = $state([]);
 	let abstracts = $state([]);
-	let activeKeyword = $state('');
-	let copiedMessage = $state('');
+	let activeKeyword = $state("");
+	let copiedMessage = $state("");
 
 	const colour = $derived(
-		scaleOrdinal(schemeCategory10).domain(data.map((d) => d['Category']))
+		scaleOrdinal(schemeCategory10).domain(data.map((d) => d["Category"])),
 	);
-	const fullQuery = $derived(data.length > 0 ? buildQueryFull(data) : '');
+	const fullQuery = $derived(data.length > 0 ? buildQueryFull(data) : "");
 
 	function showMessage(text) {
 		copiedMessage = text;
-		setTimeout(() => (copiedMessage = ''), 1500);
+		setTimeout(() => (copiedMessage = ""), 1500);
 	}
 
 	function handleDataDrop(file) {
@@ -48,7 +48,7 @@
 		queryResult = {};
 		keywordImpacts = [];
 		abstracts = [];
-		activeKeyword = '';
+		activeKeyword = "";
 	}
 
 	async function handleQueryButtonClick() {
@@ -60,15 +60,20 @@
 
 	function setKeywordImpacts() {
 		data.forEach((d, i) => {
-			const category = d['Category'];
-			const keyword = d['Keyword'];
+			const category = d["Category"];
+			const keyword = d["Keyword"];
 			const query = buildQueryUniquePapers(data, keyword, category);
 			setTimeout(() => {
 				searchScopus(query).then((res) => {
-					if ('search-results' in res) {
-						const impact = res['search-results']['opensearch:totalResults'];
+					if ("search-results" in res) {
+						const impact =
+							res["search-results"]["opensearch:totalResults"];
 						keywordImpacts = keywordImpacts.concat([
-							{ Category: category, Keyword: keyword, Impact: impact }
+							{
+								Category: category,
+								Keyword: keyword,
+								Impact: impact,
+							},
 						]);
 					}
 				});
@@ -79,15 +84,15 @@
 	async function handleAbstractChange(keyword, category) {
 		const query = buildQueryUniquePapers(data, keyword, category);
 		await navigator.clipboard.writeText(query);
-		showMessage('Query copied to clipboard');
+		showMessage("Query copied to clipboard");
 	}
 
 	function saveQuery() {
 		const csv = csvFormat(data);
-		const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-		const element = document.createElement('a');
+		const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+		const element = document.createElement("a");
 		element.href = URL.createObjectURL(blob);
-		element.download = 'keywords.csv';
+		element.download = "keywords.csv";
 		document.body.appendChild(element);
 		element.click();
 		element.remove();
@@ -99,7 +104,9 @@
 		<h2>Build query</h2>
 
 		{#if copiedMessage}
-			<div class="chip preset-filled-success-500 w-fit">{copiedMessage}</div>
+			<div class="chip preset-filled-success-500 w-fit">
+				{copiedMessage}
+			</div>
 		{/if}
 
 		{#if seeds.length === 0}
@@ -123,8 +130,10 @@
 		{#if data.length > 0}
 			<div class="buttons">
 				<QueryButton onclick={handleQueryButtonClick} />
-				<button type="button" class="btn preset-tonal" onclick={saveQuery}
-					>Download keywords as csv</button
+				<button
+					type="button"
+					class="btn preset-tonal"
+					onclick={saveQuery}>Download keywords as csv</button
 				>
 			</div>
 			<Query query={fullQuery} />
@@ -144,3 +153,27 @@
 		{/if}
 	</div>
 </div>
+
+<style>
+	.app {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 4rem;
+		padding: 2rem;
+		max-width: 1400px;
+		margin: 0 auto;
+	}
+
+	.left,
+	.right {
+		display: flex;
+		flex-flow: column;
+		gap: 1.5rem;
+	}
+
+	.buttons {
+		display: flex;
+		flex-flow: column;
+		gap: 0.5rem;
+	}
+</style>
